@@ -2,7 +2,7 @@
 // module/Album/view/album/album/index.phtml:
 
 $title = 'Forum Poster - Dashboard';
-$this->headTitle($title, ‘SET’);
+$this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
@@ -11,6 +11,7 @@ $this->headTitle($title, ‘SET’);
     <th style="width: 53px;">Id</th>
     <th style="width: 150px;">ForumName</th>
     <th style="width: 400px;">ForumStatus</th>
+    <th>SuccessRate</th>
     <th>Actions</th>
 </tr>
 <?php foreach ($projects as $project) : ?>
@@ -18,6 +19,7 @@ $this->headTitle($title, ‘SET’);
     <td><?php echo $this->escapeHtml($project->getId());?></td>
     <td><?php echo $this->escapeHtml($project->getProjectName());?></td>
     <td><?php echo $this->escapeHtml($project->getProjectStatus());?></td>
+    <td>&nbsp;</td>
     <td>
         <a href="<?php echo $this->url('forumdash', array('action'=>'edit', 'id' => $project->getId()));?>">Add keywords</a>&nbsp;&nbsp;
         <a href="<?php echo $this->url('forumdash', array('action'=>'showlatest', 'id' => $project->getId()));?>">Show posts</a>&nbsp;&nbsp;
