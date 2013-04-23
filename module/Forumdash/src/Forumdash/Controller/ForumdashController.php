@@ -234,7 +234,7 @@ class ForumdashController extends AbstractActionController
             ));
         }
 
-        $numberofposts = 5;
+        $numberofposts = 10;
 
 		$em = null;
 		$em = $this
