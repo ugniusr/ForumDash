@@ -11,6 +11,9 @@
  * file.
  */
 
+require_once "vendor/autoload.php";
+
+ 
 return array(
     // ...
 );

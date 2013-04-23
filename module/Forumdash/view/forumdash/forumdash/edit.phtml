@@ -1,0 +1,88 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\Form\Form;
+
+
+$title = 'Add keywords. Project: ' . $projectname;
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+
+	$counter = 0;
+	$form = $this->form;
+
+	$form->setAttribute('action', $this->url(
+		'forumdash',
+		array(
+			'action' => 'edit',
+			'id'     => $this->id,
+		)
+	));
+	$form->prepare();
+
+	echo $this->form()->openTag($form);
+?>
+<table class="table">
+<tr>
+    <th>Id</th>
+    <th>Link</th>
+    <th>Topic</th>
+    <th>TopicTranslated</th>
+	<th>Keyword</th>
+</tr>
+	<?php foreach ($projects as $project) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($project->getId());?></td>
+    <td><a target="_new" href="<?php echo $this->escapeHtml($project->getLink());?>">LinkToPost</a></td>
+	
+    <td><?php echo $this->escapeHtml($project->getTopic());?></td>
+    <td><?php echo $this->escapeHtml($project->getTopicTranslated());?></td>
+<td>
+
+<?php
+	$counter++;
+	//$form->prepare();
+
+	$elementId = $project->getId();
+//	echo $this->formHidden($idfield->setValue($elementId));
+//	echo $this->formRow($kwdfield);
+	
+	echo $this->formHidden($form->get('id_' . $counter)->setValue($elementId));
+	echo $this->formRow($form->get('keyword_' . $counter)->setValue(''));
+?>
+</td>
+	
+<?	//		die(var_dump($project));
+?>	
+<? 
+/*  
+	<td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'delete', 'id' => $album->id));?>">Delete</a>
+    </td>
+*/
+?>
+</tr>
+<?php endforeach; ?>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>
+<?php
+	echo $this->formSubmit($form->get('submit'));
+?>
+</td>
+</tr>
+</table> 
+
+<?php
+	echo $this->form()->closeTag(); 
+?>

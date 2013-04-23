@@ -1,0 +1,28 @@
+<?php
+// module/Forumdash/view/forumdash/forumdash/showlatest.phtml:
+
+$title = 'Latest posts from ' . $projectname;
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+<table class="table">
+<tr>
+    <th style="width: 53px;">Id</th>
+    <th style="width: 150px;">Link</th>
+    <th style="width: 150px;">Posting Time</th>
+
+</tr>
+<?php foreach ($posts as $post) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($post->getId());?></td>
+    <td><a target="_new" href="<?php echo $this->escapeHtml($post->getLink());?>"><?php echo substr($this->escapeHtml($post->getLink()),0,50) . "..."; ?></a></td>
+    <td><?php 
+    $postdate = $post->getPostingtime();
+    echo $postdate->format('Y-m-d H:i:s');
+    ?></td>
+
+</tr>
+<?php endforeach; ?>
+</table> 

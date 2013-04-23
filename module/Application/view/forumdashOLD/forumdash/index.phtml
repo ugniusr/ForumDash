@@ -1,0 +1,35 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'My albums';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="">Add new album</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Id</th>
+    <th>VariableName</th>
+    <th>Value</th>
+</tr>
+<?php foreach ($cfg as $cfg1) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($cfg1->Id);?></td>
+    <td><?php echo $this->escapeHtml($cfg1->Variablename);?></td>
+    <td><?php echo $this->escapeHtml($cfg1->Value);?></td>
+<? 
+/*  
+	<td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'delete', 'id' => $album->id));?>">Delete</a>
+    </td>
+*/
+?>
+</tr>
+<?php endforeach; ?>
+</table> 

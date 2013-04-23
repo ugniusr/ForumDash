@@ -1,0 +1,38 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'Forum Poster - Dashboard';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table class="table">
+<tr>
+    <th style="width: 53px;">Id</th>
+    <th style="width: 150px;">ForumName</th>
+    <th style="width: 400px;">ForumStatus</th>
+    <th>Actions</th>
+</tr>
+<?php foreach ($projects as $project) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($project->getId());?></td>
+    <td><?php echo $this->escapeHtml($project->getProjectName());?></td>
+    <td><?php echo $this->escapeHtml($project->getProjectStatus());?></td>
+    <td>
+        <a href="<?php echo $this->url('forumdash', array('action'=>'edit', 'id' => $project->getId()));?>">Add keywords</a>&nbsp;&nbsp;
+        <a href="<?php echo $this->url('forumdash', array('action'=>'showlatest', 'id' => $project->getId()));?>">Show posts</a>&nbsp;&nbsp;
+
+    </td>
+<? 
+/*  
+	<td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>"> Show posts</a>&nbsp;|&nbsp;
+        <a href="<?php echo $this->url('album',
+            array('action'=>'delete', 'id' => $album->id));?>"> Edit Settings</a>
+    </td>
+*/
+?>
+</tr>
+<?php endforeach; ?>
+</table> 

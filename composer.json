@@ -8,7 +8,13 @@
     ],
     "homepage": "http://framework.zend.com/",
     "require": {
+		"doctrine/orm": "*",
+		"zendframework/zend-developer-tools": "dev-master@dev",
         "php": ">=5.3.3",
-        "zendframework/zendframework": ">2.1.3"
+		"bjyoungblood/bjy-profiler": "dev-master",
+        "zendframework/zendframework": ">2.1.3",
+        "doctrine/doctrine-orm-module": "0.7.*",
+		"phpunit/phpunit": "3.7.*",
+        "zendexperts/ze-theme": "dev-master"
     }
 }
