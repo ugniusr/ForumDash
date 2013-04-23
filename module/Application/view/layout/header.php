@@ -69,9 +69,8 @@ echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.micros
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="/forumposter"> <img alt="Charisma Logo" src="/img/logo20.png" /> <span>Charisma</span></a>
-				
-				<!-- theme selector starts 
+				<a class="brand" href="/forumposter"> <!-- <img alt="Charisma Logo" src="/img/logo20.png" />--> <span>ForumDash</span></a>
+				<!--	 theme selector starts 
 				<div class="btn-group pull-right theme-container" >
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 						<i class="icon-tint"></i><span class="hidden-phone"> Change Theme / Skin</span>
