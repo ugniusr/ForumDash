@@ -3,6 +3,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Forumdash\Controller\Forumdash' => 'Forumdash\Controller\ForumdashController',
+            'Forumdash\Controller\Console' => 'Forumdash\Controller\ConsoleController',
+
         ),
     ),
 
@@ -25,7 +27,21 @@ return array(
             ),
         ),
     ),
-
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'printhello' => array(
+                    'options' => array(
+                        'route'    => 'printhello [--verbose|-v] <optionalNumber>',
+                        'defaults' => array(
+                            'controller' => 'Forumdash\Controller\Console',
+                            'action'     => 'printhello'
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
     'view_manager' => array(
         'template_path_stack' => array(
             'forumdash' => __DIR__ . '/../view',
