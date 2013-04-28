@@ -107,7 +107,23 @@ echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.micros
 				
 				<div class="top-nav nav-collapse">
 					<ul class="nav">
-						<li><a href="#">Home</a></li>
+						<li>
+							<a href="/forumposter">Home</a></li>
+							<?php
+								// $helper->setRenderFlag(Zend\View\Helper\Navigation\Links::RENDER_START);
+								/* 
+								$container = new \Zend\Navigation\Navigation(array(
+								    array(
+								        'label' => 'Home',
+								        'id' => '',
+								        'uri' => '/',
+									    ),
+									));
+								// die(var_dump($container));
+								echo $this->view->navigation()->links();
+								// echo $this->navigation()->menu()->render();
+								*/
+							?>
 						<li>
 							<form class="navbar-search pull-left">
 								<input placeholder="Search" class="search-query span2" name="query" type="text">
