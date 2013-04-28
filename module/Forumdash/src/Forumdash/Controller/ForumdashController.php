@@ -110,8 +110,15 @@ class ForumdashController extends AbstractActionController
 			$kwdfield->setAttributes(array(
 				'type'  => 'text'
 			));	
+			$answfield = new Element('answer_' . $i);
+			$answfield->setLabel('');
+			$answfield->setAttributes(array(
+				'type'  => 'textarea',
+				'rows'  => '3',
+			));	
 			$form->add($idfield);
 			$form->add($kwdfield);
+			$form->add($answfield);
 		}
 
 
@@ -130,6 +137,7 @@ class ForumdashController extends AbstractActionController
 					{
 						$qb->update('Forumdash\Entity\Topicsgeneric', 't')
 							->set('t.productkeyword',$qb->expr()->literal($keywords["keyword_". $i]))
+							->set('t.custresponse',$qb->expr()->literal($keywords["answer_". $i]))
 							->where('t.id = ' . $keywords["id_". $i]);
 							
 						$query = $qb->getQuery()

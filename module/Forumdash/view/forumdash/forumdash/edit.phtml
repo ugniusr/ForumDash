@@ -34,6 +34,7 @@ $this->headTitle($title);
     <th>Topic</th>
     <th>TopicTranslated</th>
 	<th>Keyword</th>
+	<th>CustomResponse - <br>must include [url]</th>
 </tr>
 	<?php foreach ($projects as $project) : ?>
 <tr>
@@ -42,44 +43,40 @@ $this->headTitle($title);
 	
     <td><?php echo $this->escapeHtml($project->getTopic());?></td>
     <td><?php echo $this->escapeHtml($project->getTopicTranslated());?></td>
-<td>
-
-<?php
-	$counter++;
-	//$form->prepare();
-
-	$elementId = $project->getId();
-//	echo $this->formHidden($idfield->setValue($elementId));
-//	echo $this->formRow($kwdfield);
-	
-	echo $this->formHidden($form->get('id_' . $counter)->setValue($elementId));
-	echo $this->formRow($form->get('keyword_' . $counter)->setValue(''));
-?>
-</td>
-	
-<?	//		die(var_dump($project));
-?>	
-<? 
-/*  
 	<td>
-        <a href="<?php echo $this->url('album',
-            array('action'=>'edit', 'id' => $album->id));?>">Edit</a>
-        <a href="<?php echo $this->url('album',
-            array('action'=>'delete', 'id' => $album->id));?>">Delete</a>
-    </td>
-*/
-?>
+
+	<?php
+		$counter++;
+		//$form->prepare();
+
+		$elementId = $project->getId();
+	//	echo $this->formHidden($idfield->setValue($elementId));
+	//	echo $this->formRow($kwdfield);
+		
+		echo $this->formHidden($form->get('id_' . $counter)->setValue($elementId));
+		echo $this->formRow($form->get('keyword_' . $counter)->setValue(''));
+	?>
+	</td>
+	<td>
+
+	<?php
+		echo $this->formRow($form->get('answer_' . $counter)->setValue(''));
+	?>
+	</td>
+	
 </tr>
 <?php endforeach; ?>
 <tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>
-<?php
-	echo $this->formSubmit($form->get('submit'));
-?>
-</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>
+	<?php
+		echo $this->formSubmit($form->get('submit'));
+	?>
+	</td>
 </tr>
 </table> 
 
