@@ -17,7 +17,7 @@ $this->headTitle($title);
 <?php foreach ($posts as $post) : ?>
 <tr>
     <td><?php echo $this->escapeHtml($post->getId());?></td>
-    <td><a target="_blank" href="<?php echo $this->escapeHtml($post->getLink());?>"><?php echo substr($this->escapeHtml($post->getLink()),0,50) . "..."; ?></a></td>
+    <td><?php echo $this->escapeHtml($post->getLink()); ?><?php // echo substr($this->escapeHtml($post->getLink()),0,50) . "..."; ?></td>
     <td><?php 
     $postdate = $post->getPostingtime();
     echo $postdate->format('Y-m-d H:i:s');
