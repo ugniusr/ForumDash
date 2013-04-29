@@ -358,4 +358,5 @@ return array(
     'ZeTheme\\Module' => $baseDir . '/vendor/zendexperts/ze-theme/Module.php',
     'ZeTheme\\Service\\ManagerFactory' => $baseDir . '/vendor/zendexperts/ze-theme/src/ZeTheme/Service/ManagerFactory.php',
     'ZendDeveloperTools\\Module' => $baseDir . '/vendor/zendframework/zend-developer-tools/Module.php',
+    'MicrosoftTranslator\\MicrosoftTranslator' => $vendorDir . '/microsoft/microsofttranslator/src/MicrosoftTranslator.php',
 );
