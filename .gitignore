@@ -9,3 +9,5 @@ nbproject
 composer.lock
 vendor/bin
 config/application.config.php
+local.php
+*.local.php
