@@ -10,7 +10,7 @@ use Zend\Form\Element;
 use Zend\Form\Fieldset;
 use Zend\Form\Form;
 //use Classes\MicrosoftTranslator;
-use MicrosoftTranslator;
+use Bingtranslate;
 
 use Forumdash\Entity\Topicsgeneric;
 use Doctrine\ORM\Mapping\Driver\StaticPHPDriver;
@@ -186,7 +186,7 @@ class ForumdashController extends AbstractActionController
 					//
 					// Translate
 					//
-					$translator = new \MicrosoftTranslator\MicrosoftTranslator(ACCOUNT_KEY);
+					$translator = new \Bingtranslate\Controller\BingtranslateController(ACCOUNT_KEY);
 					$text_to_translate = $row->getTopic();
 					$to = "en";
 					$from = $language;

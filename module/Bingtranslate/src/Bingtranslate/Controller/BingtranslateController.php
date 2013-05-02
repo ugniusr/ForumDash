@@ -1,6 +1,6 @@
 <?php
 
-namespace MicrosoftTranslator;
+namespace Bingtranslate\Controller;
 
 /**
  * MicrosoftTranslator - A PHP Wrapper for Microsoft JSON Translator API
@@ -12,7 +12,7 @@ namespace MicrosoftTranslator;
  * @version     1.0.0
  */
 
-class MicrosoftTranslator
+class BingtranslateController
 {
 
 /**
