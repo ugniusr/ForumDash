@@ -69,6 +69,17 @@
 ->prependFile($this->basePath() . '/js/charisma.js')
 
 ?>
+
+<!--script at the end of the page-->
+<script 
+src="http://blankrefer.com/links.js" type="text/javascript"></script>
+<script 
+type="text/javascript"><!--
+protected_links = "kokie nors anchor text'ai, kuriems norim netaikyti Blank refer'io";
+
+blank_refer();
+//--></script>
+<!--script at the end of the page-->
 		
 </body>
 </html>
