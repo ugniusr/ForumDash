@@ -5,12 +5,16 @@ return array(
         'Application',
 		'Forumdash',
 		'Album',
+        'ZfcBase',
+        'ZfcUser',
+        'ZfcUserDoctrineORM',
+        'BjyAuthorize',
 
+        'SamUser',
         'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
         'ZeTheme',
-
     ),
 
     // These are various options for the listeners attached to the ModuleManager

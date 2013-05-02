@@ -15,6 +15,8 @@ use MicrosoftTranslator;
 use Forumdash\Entity\Topicsgeneric;
 use Doctrine\ORM\Mapping\Driver\StaticPHPDriver;
 
+use zfcUser;
+
 require __DIR__ . '/config.inc.php';
 //require __DIR__ . '/class/ServicesJSON.class.php';
 //require __DIR__ . '/class/MicrosoftTranslator.class.php';
@@ -22,10 +24,15 @@ require __DIR__ . '/config.inc.php';
 
 class ForumdashController extends AbstractActionController
 {
-	protected $albumTable;
+	//protected $albumTable;
 	
     public function indexAction()
     {
+
+
+//  	echo $this->zfcUserLoginWidget();
+
+
 
 	$objectManager = $this
         ->getServiceLocator()
