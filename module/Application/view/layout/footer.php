@@ -75,7 +75,7 @@
 src="http://blankrefer.com/links.js" type="text/javascript"></script>
 <script 
 type="text/javascript"><!--
-protected_links = "kokie nors anchor text'ai, kuriems norim netaikyti Blank refer'io";
+protected_links = "localhost,eglesum";
 
 blank_refer();
 //--></script>
