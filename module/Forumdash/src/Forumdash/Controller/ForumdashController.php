@@ -5,6 +5,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 //use Album\Model\Album;          // <-- Add this import
 use Forumdash\Form\ForumdashForm;
+use Forumdash\Form\AddforumForm;
+use Forumdash\Form\AddtopicsForm;
+use Forumdash\Form\AddaccountpropertyForm;
 
 use Zend\Form\Element;
 use Zend\Form\Fieldset;
@@ -13,9 +16,12 @@ use Zend\Form\Form;
 use Bingtranslate;
 
 use Forumdash\Entity\Topicsgeneric;
+//use Forumdash\Entity\Data_import;
 use Doctrine\ORM\Mapping\Driver\StaticPHPDriver;
 
 use zfcUser;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+
 
 require __DIR__ . '/config.inc.php';
 //require __DIR__ . '/class/ServicesJSON.class.php';
@@ -52,7 +58,7 @@ class ForumdashController extends AbstractActionController
 	
 	$query = $qb->getQuery();
 	$result = $query->getResult();
-	
+	//die(var_dump($result));
 	return new ViewModel(array(
             'projects' => $result,
         ));
@@ -61,50 +67,50 @@ class ForumdashController extends AbstractActionController
 
     public function editAction()
     {    
-		$id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('forumdash', array(
                 'action' => 'index'
             ));
         }
 		
-		$numberofkwds = 5;
-		
-		$em = null;
-		$em = $this
-			->getServiceLocator()
-			->get('Doctrine\ORM\EntityManager');
+        $numberofkwds = 5;
 
-		$objectManager = null;
-		$objectManager = $this
-			->getServiceLocator()
-			->get('Doctrine\ORM\EntityManager');
-			
-		$Projects = $objectManager
-			->getRepository('Forumdash\Entity\Projects')
-			->findOneBy(array('id' => $id)); 
-		
-		$tablename = $Projects->getTopicstable();
-		$tablename = ucfirst($tablename); 
-		$projectname = $Projects->getProjectname();
-		$language = $Projects->getLanguage();
+        $em = null;
+        $em = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
 
-		$topicstblnew = $em
-			->getRepository('Forumdash\Entity\Topicsgeneric');
+        $objectManager = null;
+        $objectManager = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
 
-		$cmf = $em->getMetadataFactory();
-		$class = $cmf->getMetadataFor('Forumdash\Entity\Topicsgeneric');
-		$class->setPrimaryTable(array('name' => $tablename));
+        $Projects = $objectManager
+                ->getRepository('Forumdash\Entity\Projects')
+                ->findOneBy(array('id' => $id)); 
 
-		//die(var_dump($class));
+        $tablename = $Projects->getTopicstable();
+        $tablename = ucfirst($tablename); 
+        $projectname = $Projects->getProjectname();
+        $language = $Projects->getLanguage();
 
-		$qb = null;
-		$qb = $objectManager
-			->createQueryBuilder();
-			
-		$form = new ForumdashForm();
-                $form->get('submit')->setValue('Submit');
-		
+        $topicstblnew = $em
+                ->getRepository('Forumdash\Entity\Topicsgeneric');
+
+        $cmf = $em->getMetadataFactory();
+        $class = $cmf->getMetadataFor('Forumdash\Entity\Topicsgeneric');
+        $class->setPrimaryTable(array('name' => $tablename));
+
+        //die(var_dump($class));
+
+        $qb = null;
+        $qb = $objectManager
+                ->createQueryBuilder();
+
+        $form = new ForumdashForm();
+        $form->get('submit')->setValue('Submit');
+
 		for ($i = 1; $i<=$numberofkwds; $i++)
 		{
 			$idfield = new Element('id_' . $i);
@@ -138,21 +144,21 @@ class ForumdashController extends AbstractActionController
             if ($form->isValid()) {
                 $keywords = $form->getData();
 							
-				for ($i=1; $i<=$numberofkwds; $i++)
-				{
-					if ($keywords["keyword_". $i] != '')
-					{
-						$qb->update('Forumdash\Entity\Topicsgeneric', 't')
-							->set('t.productkeyword',$qb->expr()->literal($keywords["keyword_". $i]))
-							->set('t.custresponse',$qb->expr()->literal($keywords["answer_". $i]))
-							->where('t.id = ' . $keywords["id_". $i]);
-							
-						$query = $qb->getQuery()
-									->useQueryCache(false);		
-										
-						$result = $query->execute();
-					}
-				}
+                for ($i=1; $i<=$numberofkwds; $i++)
+                {
+                        if ($keywords["keyword_". $i] != '')
+                        {
+                                $qb->update('Forumdash\Entity\Topicsgeneric', 't')
+                                        ->set('t.productkeyword',$qb->expr()->literal($keywords["keyword_". $i]))
+                                        ->set('t.custresponse',$qb->expr()->literal($keywords["answer_". $i]))
+                                        ->where('t.id = ' . $keywords["id_". $i]);
+
+                                $query = $qb->getQuery()
+                                                        ->useQueryCache(false);		
+
+                                $result = $query->execute();
+                        }
+                }
 
                 // Redirect to list of albums
                 //return $this->redirect()->toRoute('forumdash');
@@ -226,11 +232,11 @@ class ForumdashController extends AbstractActionController
 		//	die(var_dump($result));
 
         return array(
-			'projects' => $result,
-			'id' => $id,
+            'projects' => $result,
+            'id' => $id,
             'form' => $form,
-			'numberofkwds' => $numberofkwds,
-			'projectname' => $projectname,
+            'numberofkwds' => $numberofkwds,
+            'projectname' => $projectname,
         );
 
 /*
@@ -240,9 +246,320 @@ class ForumdashController extends AbstractActionController
 */
     }
 
+    
+    public function addforumAction()
+    {
+
+        $objectManager = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
+
+        
+        $vm = new ViewModel();
+        $vm->setTemplate('forumdash/forumdash/addforum.phtml');
+
+        //$entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $form = new AddforumForm($objectManager);
+        
+        // $sl = $this->getServiceLocator();
+        // $form = $sl->get('FormElementManager')->get('\Forumdash\Form\AddforumForm');
+        
+        //$form = new AddforumForm();
+        $form->get('submit')->setValue('Add');        
+        
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) 
+        {
+            //$form->setInputFilter($newforum->getInputFilter());
+            $form->setData($request->getPost());
+            
+            if ($form->isValid()) {
+                
+                $hydrator = new DoctrineObject(
+                    $objectManager,
+                    'Forumdash\Entity\Projects'        
+                );
+                       
+                $projects = new \Forumdash\Entity\Projects();
+                $data = $form->getData();
+
+                $projects = $hydrator->hydrate($data, $projects);
+                $topictable = $data['TopicsTable'];
+                
+                //die(var_dump($topictable)); // prints "Frankfurt"
+                
+                $db = $objectManager->getConnection();
+                $querycheck = $db->prepare("SELECT table_name FROM information_schema.tables WHERE table_schema = 'postingdb' AND table_name = '$topictable';");                
+                $querycheck->execute();
+                $tblexists = $querycheck->fetchAll();
+                // array(1) { [0]=> array(1) { ["table_name"]=> string(11) "topicstest2" } }
+                // array(0) { }
+                
+                
+                if(empty($tblexists))
+                {
+                    // CREATE entry in the projects table
+                    $objectManager->persist($projects);
+                    $objectManager->flush();
+                
+                    // CREATE a new topics table
+                    $query = $db->prepare("CREATE TABLE `$topictable` (   `Id` int(10) 
+                        NOT NULL AUTO_INCREMENT,   `Link` varchar(255) DEFAULT NULL,   
+                        `Topic` text,   `TopicTranslated` text,   
+                        `PostingTime` datetime DEFAULT NULL,   
+                        `PostedStatus` tinyint(4) NOT NULL DEFAULT '0',   
+                        `PostURLexact` varchar(255) DEFAULT NULL,   
+                        `ProductKeyword` varchar(100) DEFAULT NULL,   
+                        `LongURL1` text,   `LongURL2` text,   
+                        `ShortURL1` varchar(100) DEFAULT NULL,   
+                        `ShortURL2` varchar(100) DEFAULT NULL,   `Response` longtext,   
+                        `CustResponse` longtext,   `AffprogramId1` int(10) NOT NULL DEFAULT '$data[AffprogramId1]',   
+                        `AffprogramId2` int(10) NOT NULL DEFAULT '0',   
+                        PRIMARY KEY (`Id`),   UNIQUE KEY `Link` (`Link`) ) 
+                        ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;");
+
+                    $query->execute();
+                }
+                else
+                {
+                    $errormsg = "Such topic table name already exists";
+                    return $vm->setVariables(array(
+                        'form' => $form,
+                        'err' => $errormsg,
+                    ));
+                    
+                }
+                return $this->redirect()->toRoute('forumdash', array(
+                    'action' => 'index'
+                ));
+            }
+        }
+        /**/
+        
+        //$form->setObjectManager($objectManager);
+        //die(var_dump($form));
+        
+        
+        
+        return $vm->setVariables(array(
+            'form' => $form,
+            'err' => $errormsg,
+        ));
+        
+        
+        //return array('form' => $form);
+        
+    }
+
+    public function addaccountpropertyAction()
+    {
+        $objectManager = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
+
+        $vm = new ViewModel();
+        $vm->setTemplate('forumdash/forumdash/addaccountproperty.phtml');
+
+        $form = new AddaccountpropertyForm();
+        $form->get('submit')->setValue('Add');        
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) 
+        {
+            //$form->setInputFilter($newforum->getInputFilter());
+            $form->setData($request->getPost());
+            
+            if ($form->isValid()) {
+                
+                $data = $form->getData();
+                $propertyname = $data['PropertyName'];
+                $dataPropvalues = $form->getData()['Propvalues'];
+                $dataPropvalues = str_replace("\r\n", "\n", $dataPropvalues);
+                $rowarray = \explode("\n",$dataPropvalues);
+                //die(var_dump($form->getData()));
+                foreach($rowarray as $row) :
+                    
+                    $arraytobejsoned = array($propertyname => $row);
+                    $jsonRow = json_encode($arraytobejsoned);
+                    //die(var_dump($jsonRow));
+                    if ($jsonRow != NULL && $jsonRow != "")
+                        $newarray[] = $jsonRow;                
+                endforeach;
+                
+                
+                // CREATE a TEMP table ( If exists, delete it first)
+                $db = $objectManager->getConnection();
+                
+                $query = $db->prepare("DROP TABLE IF EXISTS `import_data`;");
+
+                $query->execute();
+                $query->closeCursor();
+
+                $query = $db->prepare("CREATE TABLE `import_data` (
+                  `Id` int(10) NOT NULL AUTO_INCREMENT,
+                  `Data` TEXT,
+                  PRIMARY KEY (`Id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+                $query->execute();
+                $query->closeCursor();
+                // die(var_dump($query));
+                
+                // Populate a TEMP table
+                $k = count($newarray);
+                for ($i=0; $i < $k; $i++)
+                {
+                    $tempdatarow = new \Forumdash\Entity\Dataimport();
+                    $tempdatarow->setData($newarray[$i]);
+                    $objectManager->persist($tempdatarow);
+                }
+                $objectManager->flush();
+                $objectManager->clear();
+                
+                // die(var_dump($objectManager));
+                // "CALL doiterate()"
+                $query = $db->prepare("CALL Updateaccountproperties();");
+                $query->execute();
+                $query->closeCursor();
+                
+                //die(var_dump($query));
+
+                // Delete a TEMP
+                $query = $db->prepare("DROP TABLE IF EXISTS `import_data`;");
+                $query->execute();
+                
+                return $this->redirect()->toRoute('forumdash', array(
+                    'action' => 'index'
+                ));
+            }
+
+        }
+        
+        return $vm->setVariables(array(
+            'form' => $form,
+            'err' => $errormsg,
+        ));
+        
+    }    
+
+    public function addtopicsAction()
+    {
+        
+        
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('forumdash', array(
+                'action' => 'index'
+            ));
+        }
+
+        $vm = new ViewModel();
+        $vm->setTemplate('forumdash/forumdash/addtopics.phtml');
+
+
+        $em = null;
+        $em = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
+
+        $objectManager = null;
+        $objectManager = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
+
+        $Projects = $objectManager
+                ->getRepository('Forumdash\Entity\Projects')
+                ->findOneBy(array('id' => $id)); 
+
+        $tablename = $Projects->getTopicstable();
+        $tablename = ucfirst($tablename); 
+        $projectname = $Projects->getProjectname();
+        // $language = $Projects->getLanguage();
+        //die(var_dump($tablename));
+
+        $topicstblnew = $em
+                ->getRepository('Forumdash\Entity\Topicsgeneric');
+
+        $cmf = $em->getMetadataFactory();
+        $class = $cmf->getMetadataFor('Forumdash\Entity\Topicsgeneric');
+        $class->setPrimaryTable(array('name' => $tablename));
+
+        //die(var_dump($class));
+
+        $qb = null;
+                
+        $form = new AddtopicsForm();
+        $form->get('submit')->setValue('Add');        
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) 
+        {
+            //$form->setInputFilter($newforum->getInputFilter());
+            $form->setData($request->getPost());
+            
+            if ($form->isValid()) 
+            {
+                // $rowarray = array();
+                $rowarray = \explode("\n",$form->getData()['topics']);
+                foreach($rowarray as $row) :
+                    $colarray = \explode("\t", $row);
+                    
+                    $qb = $objectManager
+                        ->createQueryBuilder();
+                    $qb->select('addtop')
+                            ->from('Forumdash\Entity\Topicsgeneric', 'addtop')
+                            ->where('addtop.link = \'' . $colarray[0] . '\'');
+
+                    $query = $qb->getQuery()
+                            ->useQueryCache(false);			
+
+                    $result = $query->getResult();
+                    
+                    // $result = NULL;  Value for testing purposes only
+                    
+                    $importdata["Link"] = $colarray[0];
+                    $importdata["Topic"] = $colarray[1]; 
+                    $importdata["PostedStatus"] = 0;
+                    $importdata["AffprogramId1"] = 0;
+                    $importdata["AffprogramId2"] = 0;
+                    
+                    if(empty($result))
+                    {
+                        $hydrator = new DoctrineObject(
+                            $objectManager,
+                            'Forumdash\Entity\Topicsgeneric'        
+                        );
+                        $topics = new \Forumdash\Entity\Topicsgeneric();
+                        $topics = $hydrator->hydrate($importdata, $topics);
+                        $objectManager->persist($topics);
+                        
+                    }
+                    
+                endforeach;
+                
+                $objectManager->flush();
+                
+                return $this->redirect()->toRoute('forumdash', array(
+                    'action' => 'index'
+                ));
+                //die(var_dump($rowarray));
+            }
+        }
+
+        return $vm->setVariables(array(
+            'form' => $form,
+            'id' => $id,
+            'projectname' => $projectname,   
+        ));
+        
+    }   
+    
+    
+    
     public function showlatestAction()
     {
-		$id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('forumdash', array(
                 'action' => 'index'
@@ -251,54 +568,53 @@ class ForumdashController extends AbstractActionController
 
         $numberofposts = 10;
 
-		$em = null;
-		$em = $this
-			->getServiceLocator()
-			->get('Doctrine\ORM\EntityManager');
+        $em = null;
+        $em = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
+
+        $objectManager = null;
+        $objectManager = $this
+                ->getServiceLocator()
+                ->get('Doctrine\ORM\EntityManager');
+
+        $Projects = $objectManager
+                ->getRepository('Forumdash\Entity\Projects')
+                ->findOneBy(array('id' => $id)); 
+
+        $tablename = $Projects->getTopicstable();
+        $tablename = ucfirst($tablename); 
+        $projectname = $Projects->getProjectname();
+        $language = $Projects->getLanguage();
 
 
-		$objectManager = null;
-		$objectManager = $this
-			->getServiceLocator()
-			->get('Doctrine\ORM\EntityManager');
-			
-		$Projects = $objectManager
-			->getRepository('Forumdash\Entity\Projects')
-			->findOneBy(array('id' => $id)); 
-		
-		$tablename = $Projects->getTopicstable();
-		$tablename = ucfirst($tablename); 
-		$projectname = $Projects->getProjectname();
-		$language = $Projects->getLanguage();
+        $topicstblnew = $em
+            ->getRepository('Forumdash\Entity\Topicsgeneric');
+
+        $cmf = $em->getMetadataFactory();
+        $class = $cmf->getMetadataFor('Forumdash\Entity\Topicsgeneric');
+        $class->setPrimaryTable(array('name' => $tablename));
+
+        //die(var_dump($class));
+
+        $qb = null;
+        $qb = $objectManager
+                ->createQueryBuilder();
 
 
-		$topicstblnew = $em
-			->getRepository('Forumdash\Entity\Topicsgeneric');
+        $qb->select('tbl')
+            ->from('Forumdash\Entity\Topicsgeneric', 'tbl')
+            ->where('tbl.postingtime IS NOT NULL')
+            ->orderBy('tbl.postingtime', 'DESC')
+            ->setMaxResults($numberofposts);
 
-		$cmf = $em->getMetadataFactory();
-		$class = $cmf->getMetadataFor('Forumdash\Entity\Topicsgeneric');
-		$class->setPrimaryTable(array('name' => $tablename));
+        $query = $qb->getQuery()
+                ->useQueryCache(false);			
 
-		//die(var_dump($class));
-
-		$qb = null;
-		$qb = $objectManager
-			->createQueryBuilder();
-
-
-		$qb->select('tbl')
-			->from('Forumdash\Entity\Topicsgeneric', 'tbl')
-			->where('tbl.postingtime IS NOT NULL')
-			->orderBy('tbl.postingtime', 'DESC')
-			->setMaxResults($numberofposts);
-			
-		$query = $qb->getQuery()
-					->useQueryCache(false);			
-			
-		$result = $query->getResult();
+        $result = $query->getResult();
 
 //		die(var_dump($result));
-
+        $this->view->posts = $result;
         return array(
 			'posts' => $result,
 			'id' => $id,

@@ -10,9 +10,10 @@ $this->headTitle($title);
 <tr>
     <th style="width: 53px;">Id</th>
     <th style="width: 150px;">ForumName</th>
-    <th style="width: 400px;">ForumStatus</th>
-    <th>SuccessRate</th>
-    <th>Actions</th>
+    <th style="width: 250px;">ForumStatus</th>
+    <th>Success<br>Rate</th>
+    <th>NextTopic<br>Aff.program</th>
+    <th style="width: 300px;">Actions</th>
 </tr>
 <?php foreach ($projects as $project) : ?>
 <tr>
@@ -20,10 +21,17 @@ $this->headTitle($title);
     <td><?php echo $this->escapeHtml($project->getProjectName());?></td>
     <td><?php echo $this->escapeHtml($project->getProjectStatus());?></td>
     <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td>
-        <a href="<?php echo $this->url('forumdash', array('action'=>'edit', 'id' => $project->getId()));?>">Add keywords</a>&nbsp;&nbsp;
-        <a href="<?php echo $this->url('forumdash', array('action'=>'showlatest', 'id' => $project->getId()));?>">Show posts</a>&nbsp;&nbsp;
-
+        <a href="<?php echo $this->url('forumdash', 
+                array('action'=>'edit', 'id' => $project->getId()));
+                ?>">Add keywords</a>&nbsp;|&nbsp;
+        <a href="<?php echo $this->url('forumdash', 
+                array('action'=>'showlatest', 'id' => $project->getId()));
+                ?>">Show posts</a>&nbsp;|&nbsp;
+        <a href="<?php echo $this->url('forumdash', 
+                array('action'=>'addtopics', 'id' => $project->getId()));
+                ?>">Add topics</a>&nbsp;
     </td>
 <? 
 /*  
@@ -38,3 +46,6 @@ $this->headTitle($title);
 </tr>
 <?php endforeach; ?>
 </table> 
+<p><a class="btn btn-large btn-primary" href="<?php echo $this->url('forumdash', array('action'=>'addforum')); ?>">Add forum</a></p>
+<p><a class="btn" href="<?php echo $this->url('forumdash', array('action'=>'addaccountproperty')); ?>">Add a new account property</a></p>
+

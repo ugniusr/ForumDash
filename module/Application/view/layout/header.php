@@ -17,6 +17,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
 	<meta name="author" content="Muhammad Usman">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+
+	<script>
+	$(document).ready(function() { 
+		$('input[name="projectname"]').blur(function() {  
+		    $('input[name="TopicsTable"]').value = "topics" +  $('input[name="projectname"]').value;
+		    }  
+		);
+	});
+	</script>
+
 
 	<!-- The styles -->
 	<style type="text/css">
@@ -28,7 +39,7 @@
 	  }
 	</style>
 <?php 
-date_default_timezone_set('Europe/Lisbon');
+date_default_timezone_set('Europe/Berlin');
 
 echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
 				->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.css')
@@ -47,7 +58,8 @@ echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.micros
 				->prependStylesheet($this->basePath() . '/css/jquery.iphone.toggle.css')
 				->prependStylesheet($this->basePath() . '/css/opa-icons.css')
 				->prependStylesheet($this->basePath() . '/css/uploadify.css')
-				->prependStylesheet($this->basePath() . '/css/bootstrap-cerulean.css');
+				->prependStylesheet($this->basePath() . '/css/bootstrap-classic.css')
+				->prependStylesheet($this->basePath() . '/css/ugniusadditions.css');
 ?>
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>

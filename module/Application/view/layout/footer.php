@@ -32,8 +32,10 @@
 	<!-- external javascript
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-<?php echo $this->headScript()->prependFile($this->basePath() . '/js/jquery-1.7.2.min.js')
-->prependFile($this->basePath() . '/js/jquery-ui-1.8.21.custom.min.js')
+<?php echo $this->headScript()->prependFile($this->basePath() . '/js/jquery-ui-1.8.21.custom.min.js')
+->prependFile($this->basePath() . '/js/topicsvalidation.js')
+/*
+
 ->prependFile($this->basePath() . '/js/bootstrap-transition.js')
 ->prependFile($this->basePath() . '/js/bootstrap-alert.js')
 ->prependFile($this->basePath() . '/js/bootstrap-modal.js')
@@ -67,7 +69,8 @@
 ->prependFile($this->basePath() . '/js/jquery.uploadify-3.1.min.js')
 ->prependFile($this->basePath() . '/js/jquery.history.js')
 ->prependFile($this->basePath() . '/js/charisma.js')
-
+->prependFile($this->basePath() . '/js/jquery-1.7.2.min.js')
+ */
 ?>
 
 <!--script at the end of the page-->

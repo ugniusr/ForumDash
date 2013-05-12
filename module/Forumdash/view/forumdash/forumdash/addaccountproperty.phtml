@@ -1,0 +1,30 @@
+<?php
+// module/Forumdash/view/forumdash/forumdash/addaccountproperty.phtml:
+
+$title = 'Add a new property: ';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+//$form->setAttribute('action', $this->url('forumdash', array('action' => 'addtopics')));
+$form->setAttribute('action', $this->url(
+		'forumdash',
+		array(
+			'action' => 'addaccountproperty',
+		)
+	));
+// die(var_dump($form));
+
+$form->prepare();
+
+echo "<br><br>";
+// die("I'm never called!");
+
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+/* echo $this->formHidden($form->get('id'));
+echo $this->formRow($form->get('title'));
+echo $this->formRow($form->get('artist'));
+echo $this->formSubmit($form->get('submit')); */
+echo $this->form()->closeTag(); 
