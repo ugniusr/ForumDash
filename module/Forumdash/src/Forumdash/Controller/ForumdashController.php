@@ -371,15 +371,13 @@ class ForumdashController extends AbstractActionController
             $form->setData($request->getPost());
             
             if ($form->isValid()) {
-                
                 $data = $form->getData();
                 $propertyname = $data['PropertyName'];
-                $dataPropvalues = $form->getData()['Propvalues'];
+                $dataPropvalues = $data['Propvalues'];
                 $dataPropvalues = str_replace("\r\n", "\n", $dataPropvalues);
                 $rowarray = \explode("\n",$dataPropvalues);
                 //die(var_dump($form->getData()));
                 foreach($rowarray as $row) :
-                    
                     $arraytobejsoned = array($propertyname => $row);
                     $jsonRow = json_encode($arraytobejsoned);
                     //die(var_dump($jsonRow));
