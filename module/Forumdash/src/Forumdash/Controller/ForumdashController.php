@@ -499,8 +499,8 @@ class ForumdashController extends AbstractActionController
             if ($form->isValid()) 
             {
                 // $rowarray = array();
-                $tmp = \explode("\n",$form->getData();
-                $rowarray = $tmp['topics']);
+                $tmp = \explode("\n",$form->getData());
+                $rowarray = $tmp['topics'];
                 foreach($rowarray as $row) :
                     $colarray = \explode("\t", $row);
                     
