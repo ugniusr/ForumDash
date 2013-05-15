@@ -63,6 +63,43 @@ class ForumdashController extends AbstractActionController
             'projects' => $result,
         ));
     }
+    
+    public function showproxiesAction()
+    {
+
+
+//  	echo $this->zfcUserLoginWidget();
+
+        $vm = new ViewModel();
+        $vm->setTemplate('forumdash/forumdash/showproxies.phtml');
+
+
+
+	$objectManager = $this
+        ->getServiceLocator()
+        ->get('Doctrine\ORM\EntityManager');
+
+	/* $Projects = $objectManager
+		->getRepository('Forumdash\Entity\Projects')
+		->findAll(); // (array('id' => '1')); */
+			
+	$qb = $objectManager
+		->createQueryBuilder();
+		
+	$qb->select('p')
+		->from('Forumdash\Entity\Proxies', 'p')
+		->where('p.id > 0')
+		->orderBy('p.id', 'ASC');
+	
+	$query = $qb->getQuery();
+	$result = $query->getResult();
+	//die(var_dump($result));
+	return new ViewModel(array(
+            'proxies' => $result,
+        ));
+    }
+    
+    
 
 
     public function editAction()

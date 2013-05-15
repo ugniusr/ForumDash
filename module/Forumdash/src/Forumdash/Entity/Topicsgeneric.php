@@ -52,9 +52,9 @@ class Topicsgeneric
     private $postingtime;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="PostedStatus", type="boolean", nullable=false)
+     * @ORM\Column(name="PostedStatus", type="integer", nullable=false)
      */
     private $postedstatus;
 
@@ -250,7 +250,7 @@ class Topicsgeneric
     /**
      * Set postedstatus
      *
-     * @param boolean $postedstatus
+     * @param integer $postedstatus
      * @return Topicsgeneric
      */
     public function setPostedstatus($postedstatus)
@@ -263,7 +263,7 @@ class Topicsgeneric
     /**
      * Get postedstatus
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getPostedstatus()
     {

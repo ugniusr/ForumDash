@@ -1,0 +1,31 @@
+<?php
+// module/Forumdash/view/forumdash/forumdash/showproxies.phtml:
+
+$title = 'Forum Poster - Active proxies';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table class="table">
+<tr>
+    <th style="width: 53px;">Id</th>
+    <th style="width: 150px;">Proxy Address:Port</th>
+</tr>
+<?php foreach ($proxies as $proxy) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($proxy->getId());?></td>
+    <td><?php echo $this->escapeHtml($proxy->getProxy());?></td>
+<? 
+/*  
+	<td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>"> Show posts</a>&nbsp;|&nbsp;
+        <a href="<?php echo $this->url('album',
+            array('action'=>'delete', 'id' => $album->id));?>"> Edit Settings</a>
+    </td>
+*/
+?>
+</tr>
+<?php endforeach; ?>
+</table> 
+
