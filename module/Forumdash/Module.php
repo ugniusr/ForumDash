@@ -9,12 +9,12 @@ use Zend\EventManager\EventInterface as Event;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface,
     Zend\ModuleManager\Feature\AutoloaderProviderInterface,
     Zend\ModuleManager\Feature\ConfigProviderInterface,
-    Zend\ModuleManager\Feature\FormElementProviderInterface,
-    Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
-use Zend\Console\Adapter\AdapterInterface as Console;
+    Zend\ModuleManager\Feature\FormElementProviderInterface;
+//    Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+// use Zend\Console\Adapter\AdapterInterface as Console;
 
 
-class Module implements FormElementProviderInterface, ConsoleUsageProviderInterface
+class Module implements FormElementProviderInterface
 {
     public function getAutoloaderConfig()
     {
@@ -86,15 +86,18 @@ class Module implements FormElementProviderInterface, ConsoleUsageProviderInterf
             ),
         );
     }
+    /*
     public function getConsoleUsage(Console $console)
     {
         return array(
             // Describe available commands
-            'user resetpassword [--verbose|-v] EMAIL'    => 'Reset password for a user',
+            'user addtopics <projectId>'    => 'Add topics to a specified project',
 
             // Describe expected parameters
-            array( 'EMAIL',            'Email of the user for a password reset' ),
-            array( '--verbose|-v',     '(optional) turn on verbose mode'        ),
+            array( '<projectId>',            'Project Id from the Projects table' ),
+            array( '-',     ' '        ),
         );
     }
+     * 
+     */
 }
