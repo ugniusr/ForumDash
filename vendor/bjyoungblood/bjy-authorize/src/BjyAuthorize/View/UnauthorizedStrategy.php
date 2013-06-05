@@ -35,8 +35,11 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
     {
         // Do nothing if the result is a response object
         $result = $e->getResult();
-        if ($result instanceof Response) {
-            return;
+        $response = $e->getResponse();
+
+
+        if ($result instanceof Response || ($response && ! $response instanceof HttpResponse)) {
+             return;
         }
 
         $router = $e->getRouter();

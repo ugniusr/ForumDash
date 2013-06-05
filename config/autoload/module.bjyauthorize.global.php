@@ -39,6 +39,7 @@ return array(
                     // Below is the default index action used by the [ZendSkeletonApplication](https://github.com/zendframework/ZendSkeletonApplication)
                     array('controller' => 'Application\Controller\Index', 'roles' => array('guest','user')),
                     array('controller' => 'Forumdash\Controller\Forumdash', 'roles' => array('user')),
+                    array('controller' => 'Forumdash\Controller\Console', 'roles' => array('guest')),
             ),
 
         ),
