@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Forumdash\Controller\Forumdash' => 'Forumdash\Controller\ForumdashController',
+            'Forumdash\Controller\Console' => 'Forumdash\Controller\ConsoleController',
         ),
     ),
 
@@ -20,6 +21,30 @@ return array(
                     'defaults' => array(
                         'controller' => 'Forumdash\Controller\Forumdash',
                         'action'     => 'index',
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'printhello' => array(
+                    'options' => array(
+                        'route'    => 'printhello',
+                        'defaults' => array(
+                            'controller' => 'Forumdash\Controller\Console',
+                            'action'     => 'printhello'
+                        ),
+                    ),
+                ),
+                'addtopics' => array(
+                    'options' => array(
+                        'route'    => 'addtopics <optionalNumber>',
+                        'defaults' => array(
+                            'controller' => 'Forumdash\Controller\Console',
+                            'action'     => 'addtopics'
+                        ),
                     ),
                 ),
             ),

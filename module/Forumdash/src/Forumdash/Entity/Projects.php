@@ -1,7 +1,7 @@
 <?php
 namespace Forumdash\Entity;
 
-
+use Zend\Json\Json;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -608,6 +608,28 @@ class Projects
     {
         return $this->properties;
     }
+    
+    
+    /**
+     * Get Propertyvalue
+     *
+     * @param string $propertyname
+     * @return string 
+     */
+    public function getPropertyvalue($propertyname)
+    {
+        $allproperties = Json::decode($this->properties, Json::TYPE_OBJECT);
+        if (\property_exists($allproperties, $propertyname))
+        {
+            $returnvalue = $allproperties->$propertyname;
+        }
+        else 
+        {
+            $returnvalue = "";
+        }
+        return $returnvalue;
+    }
+    
 
     /**
      * Set projectstatus
