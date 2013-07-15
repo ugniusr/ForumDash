@@ -131,6 +131,8 @@ class ForumdashController extends AbstractActionController
         $tablename = ucfirst($tablename); 
         $projectname = $Projects->getProjectname();
         $language = $Projects->getLanguage();
+        $lasttopicused = $Projects->getLasttopicused();
+
 
         $topicstblnew = $em
                 ->getRepository('Forumdash\Entity\Topicsgeneric');
@@ -210,8 +212,10 @@ class ForumdashController extends AbstractActionController
 			
 		$qb->select('tbl')
 			->from('Forumdash\Entity\Topicsgeneric', 'tbl')
-			->where('tbl.productkeyword IS NULL')
-			->orWhere('tbl.productkeyword = \'\'')
+            ->where('tbl.id > ' . $lasttopicused)
+            ->andWhere($qb->expr()->orX('tbl.productkeyword IS NULL', 'tbl.productkeyword = \'\''))
+//			->where('tbl.productkeyword IS NULL')
+//			->orWhere('tbl.productkeyword = \'\'')
 			->setMaxResults($numberofkwds);
 			
 		$query = $qb->getQuery()
